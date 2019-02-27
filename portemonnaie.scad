@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 1;
+version = 2;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -22,9 +22,6 @@ card_spacing = 0;
 cc_h_gap = 0.25;
 cards_gap = 0.5;
 
-
-
-
 x(cards_to_store);
 %translate([side_wall, side_wall+cc_h_gap, top_wall+cards_gap/2])
   card(cards_to_store);
@@ -39,10 +36,26 @@ module x(number_of_cards, draft=true) {
     cube([w, h, t]);
     translate([side_wall, side_wall, top_wall])
       cube([w-side_wall, h-2*side_wall, t_c]);
+    translate([0, h/2, t-top_wall])
+      card_window(w);
     if (draft) {
-      #translate([0,h/2,t/2]) rotate([90,0,0]) rotate([0,90,0])
-        engraving("p");
+      translate([0,h/2,t/2]) rotate([90,0,0]) rotate([0,90,0])
+        engraving();
     }
+  }
+}
+
+module card_window(outer_w) {
+  h = 22;
+  l = 63;
+  offset = 18.5;
+  factor = 0.4;
+  translate([outer_w/2-l/2,0,0])
+  translate([h/2*factor, 0, 0]) hull() {
+    scale([factor,1,1])
+      cylinder(d=h,h=top_wall);
+    translate([l-h/2-h/2*factor,0,0])
+      cylinder(d=h,h=top_wall);
   }
 }
 
