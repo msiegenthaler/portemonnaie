@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 4;
+version = 5;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -18,7 +18,7 @@ key_bottom_w = 7.4;
 
 side_wall = 2.5;
 top_wall = 1;
-mid_wall = 0.4;
+mid_wall = 0.5;
 front_gap = -1;
 card_spacing = 0;
 cc_h_gap = 0.25;
