@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 3;
+version = 4;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -24,7 +24,7 @@ card_spacing = 0;
 cc_h_gap = 0.25;
 cards_gap = 0.5;
 
-key_from_top = side_wall;
+key_from_top = 1;
 key_spacing_top = 0.1;
 key_spacing_side = 0.08;
 
@@ -32,9 +32,8 @@ portemonnaie(cards_to_store);
 
 %translate([side_wall, side_wall+cc_h_gap, top_wall+cards_gap/2])
   card(cards_to_store);
-%translate([cc_w+side_wall+front_gap-0.5,key_from_top,-key_t]) rotate([0,0,180]) {
+%translate([cc_w+side_wall+front_gap-0.5,key_from_top,-key_t]) rotate([0,0,180])
   key();
-}
 
 
 module portemonnaie(number_of_cards, draft=true) {
@@ -84,7 +83,7 @@ module card(n=1) {
 module key_box(w,h) {
   t = key_t + top_wall + key_spacing_top*2;
   t_neg = key_t + 2*key_spacing_top;
-  key_inset = 0.5;  window_inset = 4;
+  key_inset = 0.5;  window_inset = 2.7;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
   difference() {
     translate([0,0,-t])
@@ -93,14 +92,50 @@ module key_box(w,h) {
       key_window();
     translate([w-key_inset, key_from_top, -t_neg]) rotate([0,0,180]) linear_extrude(t_neg)
       key_negative(key_inset, key_spacing_side);
+
+    translate([0,0,0])
+      paper_money_negative(w, h, t);
   }
+
+  %translate([side_wall,h-36-side_wall,-3])
+    money_1();
+  %translate([side_wall,h-18-side_wall,-3])
+    money_2();
+}
+
+module paper_money_negative(w_full, h_full, t) {
+  w = w_full - 2*side_wall;
+  h = 30;
+  k_x1 = 75;   k_x2 = 40;   k_y = 37-h;
+  d = h*2; d_flat = 9;
+  echo(h);
+  translate([(w_full-w)/2, h_full-h-side_wall, -t]) {
+    difference() {
+      linear_extrude(t)
+        polygon(points=[[0,-k_y], [k_x2,-k_y], [k_x1,0], [w,0], [w,h], [0,h]]);
+      hull() {
+        translate([d_flat,h,0])
+          cylinder(d=d, h=top_wall);
+        translate([0,0,0])
+          cube([1,d/2,top_wall]);
+      }
+    }
+  }
+}
+
+// swiss paper money is 70x151 (200CHFs)
+module money_1() {
+  cube([36, 36, 1.5]);
+}
+module money_2() {
+  cube([72, 18, 1.5]);
 }
 
 module key_window() {
   h = 14;
   l = 22;
   offset = 18.5;
-  factor = 1;
+  factor = 0.4;
   translate([h/2-l, 0, 0]) hull() {
     cylinder(d=h,h=top_wall);
     translate([l-h/2-h/2*factor,0,0]) scale([factor,1,1])
