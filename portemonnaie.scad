@@ -33,8 +33,8 @@ key_spacing_side = 0.1;
 portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
-  w = cc_w + side_wall + front_gap    + 5.3;
-  h = cc_h + 2*side_wall + 2*cc_h_gap + 4.3;
+  w = cc_w + side_wall + front_gap    + 4.5;
+  h = cc_h + 2*side_wall + 2*cc_h_gap + 4;
   
   card_box(w, h, number_of_cards, draft);
   key_box(w, h);
@@ -105,9 +105,9 @@ module key_box(w,h) {
 }
 
 module paper_money_negative(w_full, h_full, t) {
-  w = 72;
+  w = 71;
   h = 38;
-  d = h*2-10; d_flat = 4;
+  d = h*2; d_flat = 4;
   translate([side_wall, h_full-h-side_wall, -t]) {
     difference() {
       linear_extrude(t)
