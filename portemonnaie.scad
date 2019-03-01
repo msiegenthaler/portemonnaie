@@ -67,13 +67,12 @@ module card_box(w, h, number_of_cards, draft) {
 
 module card_window(outer_w) {
   h = 22;
-  l = 63;
+  l = 45;
   factor = 0.4;
   translate([outer_w/2-l/2,0,0])
-  translate([h/2*factor, 0, 0]) hull() {
-    scale([factor,1,1])
-      cylinder(d=h,h=top_wall, $fa=0.5);
-    translate([l-h/2-h/2*factor,0,0])
+  translate([h/2-h/2*factor, 0, 0]) hull() {
+    cylinder(d=h,h=top_wall, $fa=0.5);
+    translate([l-h/2*factor,0,0]) scale([factor,1,1])
       cylinder(d=h,h=top_wall, $fa=0.5);
   }
 }
