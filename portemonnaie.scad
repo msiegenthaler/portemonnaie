@@ -18,7 +18,7 @@ key_m2_d = 25.8;
 key_m2_w = 9.2;
 key_bottom_w = 7.4;
 
-side_wall = 1.5;
+side_wall = 1.0;
 top_wall = 0.8;
 mid_wall = 0.5;
 front_gap = 0.5;
@@ -26,15 +26,15 @@ card_spacing = 0;
 cc_h_gap = 0.25;
 cards_gap = 0.9;
 
-key_from_top = 1;
+key_from_top = 0.8;
 key_spacing_top = 0.1;
 key_spacing_side = 0.1;
 
 portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
-  w = cc_w + side_wall + front_gap    + 5;
-  h = cc_h + 2*side_wall + 2*cc_h_gap + 4;
+  w = cc_w + side_wall + front_gap    + 5.3;
+  h = cc_h + 2*side_wall + 2*cc_h_gap + 4.3;
   
   card_box(w, h, number_of_cards, draft);
   key_box(w, h);
