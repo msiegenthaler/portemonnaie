@@ -9,49 +9,48 @@ cc_t = 0.9;
 
 key_l = 57.2;
 key_t = 2.8;
-key_top_w = 25.9;
+key_top_w = 26.6;
 key_m1_d = 30.1;
-key_m1_w = 13.0;
+key_m1_w = 13.5;
 key_m2_d = 25.9;
 key_m2_w = 9.2;
 key_bottom_w = 7.4;
 
-side_wall = 2.5;
-top_wall = 1;
+side_wall = 1.5;
+top_wall = 0.8;
 mid_wall = 0.5;
-front_gap = -1;
+front_gap = 0.5;
 card_spacing = 0;
 cc_h_gap = 0.25;
 cards_gap = 0.9;
 
 key_from_top = 1;
 key_spacing_top = 0.1;
-key_spacing_side = 0.08;
+key_spacing_side = 0.1;
 
 portemonnaie(cards_to_store);
 
-%translate([side_wall, side_wall+cc_h_gap, top_wall+cards_gap/2])
-  card(cards_to_store);
-%translate([cc_w+side_wall+front_gap-0.5,key_from_top,-key_t]) rotate([0,0,180])
-  key();
-
-
 module portemonnaie(number_of_cards, draft=true) {
-  w = cc_w + side_wall + front_gap;
-  h = cc_h + 2*side_wall + 2*cc_h_gap;
+  w = cc_w + side_wall + front_gap    + 5;
+  h = cc_h + 2*side_wall + 2*cc_h_gap + 7;
   
   card_box(w, h, number_of_cards, draft);
   key_box(w, h);
+
+  %translate([w-0.5,key_from_top,-key_t]) rotate([0,0,180])
+    key();
 }
 
 module card_box(w, h, number_of_cards, draft) {
   t_c = (cc_t+card_spacing)*number_of_cards + cards_gap;
+  h_c = cc_h+2*side_wall;
+  w_c = cc_w+front_gap;
   t = t_c + top_wall + mid_wall;
 
   difference() {
     cube([w, h, t]);
-    translate([side_wall, side_wall, mid_wall])
-      cube([w-side_wall, h-2*side_wall, t_c]);
+    translate([w-w_c, (h-h_c)/2, mid_wall])
+      cube([w_c, h_c, t_c]);
     translate([0, h/2, t-top_wall])
       card_window(w);
     if (draft) {
@@ -59,19 +58,21 @@ module card_box(w, h, number_of_cards, draft) {
         engraving();
     }
   }
+
+  %translate([w-w_c-front_gap, (h-h_c)/2+side_wall, top_wall+cards_gap/2])
+    card(cards_to_store);
 }
 
 module card_window(outer_w) {
   h = 22;
   l = 63;
-  offset = 18.5;
   factor = 0.4;
   translate([outer_w/2-l/2,0,0])
   translate([h/2*factor, 0, 0]) hull() {
     scale([factor,1,1])
-      cylinder(d=h,h=top_wall);
+      cylinder(d=h,h=top_wall, $fa=0.5);
     translate([l-h/2-h/2*factor,0,0])
-      cylinder(d=h,h=top_wall);
+      cylinder(d=h,h=top_wall, $fa=0.5);
   }
 }
 
@@ -98,52 +99,44 @@ module key_box(w,h) {
   }
 
   %translate([side_wall,h-36-side_wall,-3])
-    money_1();
-  %translate([side_wall,h-18-side_wall,-3])
-    money_2();
+    money();
 }
 
 module paper_money_negative(w_full, h_full, t) {
-  w = w_full - 2*side_wall;
-  h = 30;
-  k_x1 = 75;   k_x2 = 40;   k_y = 37-h;
-  d = h*2; d_flat = 9;
-  echo(h);
-  translate([(w_full-w)/2, h_full-h-side_wall, -t]) {
+  w = 72;
+  h = 38;
+  d = h*2-10; d_flat = 4;
+  translate([side_wall, h_full-h-side_wall, -t]) {
     difference() {
       linear_extrude(t)
-        polygon(points=[[0,-k_y], [k_x2,-k_y], [k_x1,0], [w,0], [w,h], [0,h]]);
+        polygon(points=[[0,0], [w,0], [w,h], [0,h]]);
       hull() {
         translate([d_flat,h,0])
-          cylinder(d=d, h=top_wall);
-        translate([0,0,0])
-          cube([1,d/2,top_wall]);
+          cylinder(d=d, h=top_wall, $fa=0.5);
+        translate([0,h-d/2,0])
+          cube([10,d/2,top_wall]);
       }
     }
   }
 }
 
 // swiss paper money is 70x151 (200CHFs)
-module money_1() {
-  cube([36, 36, 1.5]);
-}
-module money_2() {
-  cube([72, 18, 1.5]);
+module money() {
+  cube([70, 36, 1.5]);
 }
 
 module key_window() {
   h = 14;
   l = 22;
-  offset = 18.5;
   factor = 0.4;
   translate([h/2-l, 0, 0]) hull() {
-    cylinder(d=h,h=top_wall);
+    cylinder(d=h,h=top_wall, $fa=0.5);
     translate([l-h/2-h/2*factor,0,0]) scale([factor,1,1])
-      cylinder(d=h,h=top_wall);
+      cylinder(d=h,h=top_wall, $fa=0.5);
   }
 }
 
-module key_negative(inset=2, gap=2) {
+module key_negative(inset, gap) {
   x0=0;             y0=key_top_w/2+gap;
   x1=key_m1_d+gap;  y1=key_m1_w/2+gap;
   x2=key_l+gap;     y2=key_bottom_w/2+gap;
