@@ -33,8 +33,8 @@ key_spacing_side = 0.1;
 portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
-  w = cc_w + side_wall + front_gap    + 4.5;
-  h = cc_h + 2*side_wall + 2*cc_h_gap + 4;
+  w = 91.6;
+  h = 60.6;
   
   card_box(w, h, number_of_cards, draft);
   key_box(w, h);
@@ -45,7 +45,7 @@ module portemonnaie(number_of_cards, draft=true) {
 
 module card_box(w, h, number_of_cards, draft) {
   t_c = (cc_t+card_spacing)*number_of_cards + cards_gap;
-  h_c = cc_h+2*side_wall;
+  h_c = cc_h+cc_h_gap*2;
   w_c = cc_w+front_gap;
   t = t_c + top_wall + mid_wall;
 
@@ -61,7 +61,7 @@ module card_box(w, h, number_of_cards, draft) {
     }
   }
 
-  %translate([w-w_c-front_gap, (h-h_c)/2+side_wall, top_wall+cards_gap/2])
+  %translate([w-w_c+cc_h_gap, (h-h_c)/2+cc_h_gap, top_wall+cards_gap/2])
     card(cards_to_store);
 }
 
