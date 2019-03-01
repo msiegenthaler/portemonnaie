@@ -113,7 +113,7 @@ module paper_money_negative(w_full, h_full, t) {
         polygon(points=[[0,0], [w,0], [w,h], [0,h]]);
       hull() {
         translate([d_flat,h,0])
-          cylinder(d=d, h=top_wall, $fa=0.5);
+          cylinder(d=d, h=top_wall, $fa=0.2);
         translate([0,h-d/2,0])
           cube([10,d/2,top_wall]);
       }
