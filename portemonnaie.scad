@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 7;
+version = 8;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -33,8 +33,8 @@ key_spacing_side = 0.1;
 portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
-  w = 91.6;
-  h = 60.6;
+  w = 92.3;
+  h = 61.3;
   
   card_box(w, h, number_of_cards, draft);
   key_box(w, h);
@@ -145,7 +145,7 @@ module key_negative(inset, gap) {
 
   x0=-inset;        y0=key_top_w/2+gap;
   x1=key_top_d;     y1=y0;
-  x2=key_m2_d-k;      y2=key_m1_w/2+gap;
+  x2=key_m2_d-k+2;  y2=key_m1_w/2+gap;
   x3=key_m1_d+gap;  y3=key_m1_w/2+gap;
   x4=key_m1_d+gap;  y4=key_bottom_w/2+gap;
   x5=key_l+gap;     y5=key_bottom_w/2+gap;
