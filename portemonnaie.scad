@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 9;
+version = 10;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -30,13 +30,15 @@ key_from_top = 0.8;
 key_spacing_top = 0.1;
 key_spacing_side = 0.1;
 
+edge_rounding = side_wall/2;
+
 rotate([0,-90,0])
   portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
   w = 92.3;
   h = 61.3;
-  
+
   difference() {
     union() {
       card_box(w, h, number_of_cards, draft);
@@ -59,7 +61,16 @@ module card_box(w, h, number_of_cards) {
   t = t_c + top_wall + mid_wall;
 
   difference() {
-    cube([w, h, t]);
+    hull() {
+      translate([edge_rounding,edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
+      translate([w-edge_rounding,edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
+      translate([edge_rounding,h-edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
+      translate([w-edge_rounding,h-edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
+      translate([edge_rounding,edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([w-edge_rounding,edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([edge_rounding,h-edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([w-edge_rounding,h-edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+    }
     translate([w-w_c, (h-h_c)/2, mid_wall])
       cube([w_c, h_c, t_c]);
     translate([0, h/2, t-top_wall])
@@ -87,14 +98,25 @@ module card(n=1) {
 }
 
 
+$fs = 0.1;
 module key_box(w,h) {
   t = key_t + top_wall + key_spacing_top*2;
   t_neg = key_t + 2*key_spacing_top;
   key_inset = 0.5;  window_inset = 2.7;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
   difference() {
-    translate([0,0,-t])
-      cube([w,h,t]);
+    union() {
+      hull() {
+        translate([edge_rounding,edge_rounding,-t+edge_rounding]) sphere(r=edge_rounding);
+        translate([w-edge_rounding,edge_rounding,-t+edge_rounding]) sphere(r=edge_rounding);
+        translate([edge_rounding,h-edge_rounding,-t+edge_rounding]) sphere(r=edge_rounding);
+        translate([w-edge_rounding,h-edge_rounding,-t+edge_rounding]) sphere(r=edge_rounding);
+        translate([edge_rounding,edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
+        translate([w-edge_rounding,edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
+        translate([edge_rounding,h-edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
+        translate([w-edge_rounding,h-edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
+      }
+    }
     translate([w-window_inset, y1, -t])
       key_window();
     translate([w-key_inset, key_from_top, -t_neg]) rotate([0,0,180]) linear_extrude(t_neg)
@@ -154,7 +176,7 @@ module key_negative(inset, gap) {
   x3=key_m1_d+gap;  y3=key_m1_w/2+gap;
   x4=key_m1_d+gap;  y4=key_bottom_w/2+gap;
   x5=key_l+gap;     y5=key_bottom_w/2+gap;
-  #translate([0,-y0,0]) polygon([
+  translate([0,-y0,0]) polygon([
     [x0,y0],  [x1,y1],  [x2,y2],  [x3,y3],  [x4,y4],  [x5,y5],
     [x5,-y5], [x4,-y4], [x3,-y3], [x2,-y2], [x1,-y1], [x0,-y0],
   ]);
