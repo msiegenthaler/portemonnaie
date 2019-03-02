@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 8;
+version = 9;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -18,9 +18,9 @@ key_m2_d = 25.8;
 key_m2_w = 9.2;
 key_bottom_w = 7.4;
 
-side_wall = 1.0;
-top_wall = 0.8;
-mid_wall = 0.5;
+side_wall = 0.87;
+top_wall = 0.87;
+mid_wall = 0.87;
 front_gap = 0.5;
 card_spacing = 0;
 cc_h_gap = 0.25;
@@ -30,20 +30,29 @@ key_from_top = 0.8;
 key_spacing_top = 0.1;
 key_spacing_side = 0.1;
 
-portemonnaie(cards_to_store);
+rotate([0,-90,0])
+  portemonnaie(cards_to_store);
 
 module portemonnaie(number_of_cards, draft=true) {
   w = 92.3;
   h = 61.3;
   
-  card_box(w, h, number_of_cards, draft);
-  key_box(w, h);
+  difference() {
+    union() {
+      card_box(w, h, number_of_cards, draft);
+      key_box(w, h);
+    }
+    if (draft) {
+      translate([0,h/2,0]) rotate([90,0,0]) rotate([0,90,0])
+        engraving();
+    }
+  }
 
   %translate([w-0.5,key_from_top,-key_t]) rotate([0,0,180])
     key();
 }
 
-module card_box(w, h, number_of_cards, draft) {
+module card_box(w, h, number_of_cards) {
   t_c = (cc_t+card_spacing)*number_of_cards + cards_gap;
   h_c = cc_h+cc_h_gap*2;
   w_c = cc_w+front_gap;
@@ -55,10 +64,6 @@ module card_box(w, h, number_of_cards, draft) {
       cube([w_c, h_c, t_c]);
     translate([0, h/2, t-top_wall])
       card_window(w);
-    if (draft) {
-      translate([0,h/2,t/2]) rotate([90,0,0]) rotate([0,90,0])
-        engraving();
-    }
   }
 
   %translate([w-w_c+cc_h_gap, (h-h_c)/2+cc_h_gap, top_wall+cards_gap/2])
