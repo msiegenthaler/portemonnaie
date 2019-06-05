@@ -32,6 +32,8 @@ key_spacing_side = 0.1;
 
 edge_rounding = side_wall/2;
 
+current_color = "gold";
+
 rotate([0,-90,0])
   portemonnaie(cards_to_store);
 
@@ -39,9 +41,9 @@ module portemonnaie(number_of_cards, draft=true) {
   w = 92.3;
   h = 61.3;
 
-  difference() {
+  multicolor("gold") difference() {
     union() {
-      card_box(w, h, number_of_cards, draft);
+      card_box(w, h, number_of_cards);
       key_box(w, h);
     }
     if (draft) {
@@ -192,4 +194,12 @@ module key() {
     [x0,y0],  [x1,y1],  [x2,y2],  [x3,y3],  [x3,y4],  [x4,y4],
     [x4,-y4], [x3,-y4], [x3,-y3], [x2,-y2], [x1,-y1], [x0,-y0]
   ]);
+}
+
+module multicolor(color) {
+  if (current_color != "ALL" && current_color != color) {
+    // ignore our children.
+  } else {
+    color(color) children();
+  }
 }
