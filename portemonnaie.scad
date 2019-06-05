@@ -30,7 +30,7 @@ key_from_top = 0.8;
 key_spacing_top = 0.1;
 key_spacing_side = 0.1;
 
-edge_rounding = side_wall/2;
+edge_rounding = side_wall*0.75;
 
 current_color = "gold";
 
@@ -121,8 +121,12 @@ module key_box(w,h) {
     }
     translate([w-window_inset, y1, -t])
       key_window();
-    translate([w-key_inset, key_from_top, -t_neg]) rotate([0,0,180]) linear_extrude(t_neg)
-      key_negative(key_inset, key_spacing_side);
+    translate([w-key_inset, key_from_top, -t_neg]) rotate([0,0,180]) {
+      difference() {
+        linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
+        translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
+      }
+    }
 
     translate([0,0,0])
       paper_money_negative(w, h, t);
