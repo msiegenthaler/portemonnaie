@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 10;
+version = 11;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -35,7 +35,7 @@ edge_rounding = side_wall*0.75;
 current_color = "gold";
 
 rotate([0,-90,0])
-  portemonnaie(cards_to_store);
+  portemonnaie(cards_to_store, false);
 
 module portemonnaie(number_of_cards, draft=true) {
   w = 92.3;
