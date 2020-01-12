@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 13;
+version = 14;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -28,7 +28,7 @@ cards_gap = 0.9;
 
 key_from_top = 0.8;
 key_spacing_top = 0.1;
-key_spacing_side = 0.1;
+key_spacing_side = 0.4;
 
 edge_rounding = side_wall*0.75;
 
@@ -39,7 +39,7 @@ rotate([0,-90,0])
 
 module portemonnaie(number_of_cards, draft=true) {
   w = 87.5;
-  h = 59;
+  h = 59.5;
 
   multicolor("green") difference() {
     union() {
@@ -106,7 +106,7 @@ module key_box(w,h) {
   t_neg = key_t + 2*key_spacing_top;
   key_inset = 0.5;  window_inset = 2.7;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
-  key2_offset = w - 32;
+  key2_offset = w - 32.7;
   stopper_h = 0.7;
   difference() {
     union() {
@@ -150,7 +150,7 @@ module key_box(w,h) {
 }
 
 module paper_money_negative(w_full, h_full, t) {
-  w = 42;
+  w = 41;
   h = h_full-side_wall*2;
   d = w; d_flat = h-d/2;
   translate([side_wall, h_full-h-side_wall, -t]) {
@@ -215,7 +215,7 @@ module key() {
 module key2_negative(inset, gap) {
   w_top = 22.9+gap;     h_maxw = 16.5+inset;
   w_stopper = 11+gap;   h_stopper = 22.5+inset;
-  w_beard = 7.5+gap;   h_beard_s = 28.5+inset;
+  w_beard = 7.5+gap;    h_beard_s = 28.5+inset;
   h_total = 57+inset;
   rotate([0,0,180]) polygon([
     [0,0], [w_top/2,0], [w_top/2,h_maxw],
