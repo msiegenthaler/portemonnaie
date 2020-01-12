@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 12;
+version = 13;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -38,8 +38,8 @@ rotate([0,-90,0])
  portemonnaie(cards_to_store, false);
 
 module portemonnaie(number_of_cards, draft=true) {
-  w = 92.3;
-  h = 61.3;
+  w = 87.5;
+  h = 59;
 
   multicolor("green") difference() {
     union() {
@@ -143,7 +143,7 @@ module key_box(w,h) {
 }
 
 module paper_money_negative(w_full, h_full, t) {
-  w = 47;
+  w = 42;
   h = h_full-side_wall*2;
   d = w; d_flat = h-d/2;
   translate([side_wall, h_full-h-side_wall, -t]) {
