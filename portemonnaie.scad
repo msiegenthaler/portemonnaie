@@ -107,6 +107,7 @@ module key_box(w,h) {
   key_inset = 0.5;  window_inset = 2.7;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
   key2_offset = w - 32;
+  stopper_h = 0.7;
   difference() {
     union() {
       hull() {
@@ -120,20 +121,26 @@ module key_box(w,h) {
         translate([w-edge_rounding,h-edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
       }
     }
-    #translate([w-key_inset-key_m1_w,window_inset,-t]) rotate([0,0,-90])
+    translate([w-key_inset-key_m1_w,window_inset,-t]) rotate([0,0,-90])
       key_window();
     translate([w-key_inset-key_m1_w*2, key_from_top-0.3, -t_neg]) rotate([0,0,90]) {
       difference() {
         linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
-        translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
+        difference() {
+          translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
+          translate([0,-20,t_neg-2-stopper_h]) cube([10,20,2]);
+        }
       }
     }
-    #translate([key2_offset, h-window_inset,-t]) rotate([0,0,90])
+    translate([key2_offset, h-window_inset,-t]) rotate([0,0,90])
       key_window();
     translate([key2_offset, h, -t_neg]) rotate([0,0,0]) {
       difference() {
         linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
-        translate([0,-4.5,t_neg]) scale([0.4,0.2,0.15]) sphere(r=10);
+        difference() {
+          translate([0,-4.5,t_neg]) scale([0.4,0.2,0.15]) sphere(r=10);
+          translate([-10,-10,t_neg-2-stopper_h]) cube([20,10,2]);
+        }
       }
     }
 
