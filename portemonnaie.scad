@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 11;
+version = 12;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -32,16 +32,16 @@ key_spacing_side = 0.1;
 
 edge_rounding = side_wall*0.75;
 
-current_color = "gold";
+current_color = "green";
 
 rotate([0,-90,0])
-  portemonnaie(cards_to_store, false);
+ portemonnaie(cards_to_store, false);
 
 module portemonnaie(number_of_cards, draft=true) {
   w = 92.3;
   h = 61.3;
 
-  multicolor("gold") difference() {
+  multicolor("green") difference() {
     union() {
       card_box(w, h, number_of_cards);
       key_box(w, h);
@@ -52,7 +52,7 @@ module portemonnaie(number_of_cards, draft=true) {
     }
   }
 
-  %translate([w-0.5,key_from_top,-key_t]) rotate([0,0,180])
+  *translate([w-0.5,key_from_top,-key_t]) rotate([0,0,180])
     key();
 }
 
@@ -106,6 +106,7 @@ module key_box(w,h) {
   t_neg = key_t + 2*key_spacing_top;
   key_inset = 0.5;  window_inset = 2.7;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
+  key2_offset = w - 32;
   difference() {
     union() {
       hull() {
@@ -119,36 +120,40 @@ module key_box(w,h) {
         translate([w-edge_rounding,h-edge_rounding,-edge_rounding]) cylinder(r=edge_rounding, h=edge_rounding);
       }
     }
-    translate([w-window_inset, y1, -t])
+    #translate([w-key_inset-key_m1_w,window_inset,-t]) rotate([0,0,-90])
       key_window();
-    translate([w-key_inset, key_from_top, -t_neg]) rotate([0,0,180]) {
+    translate([w-key_inset-key_m1_w*2, key_from_top-0.3, -t_neg]) rotate([0,0,90]) {
       difference() {
         linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
         translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
+      }
+    }
+    #translate([key2_offset, h-window_inset,-t]) rotate([0,0,90])
+      key_window();
+    translate([key2_offset, h, -t_neg]) rotate([0,0,0]) {
+      difference() {
+        linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
+        translate([0,-4.5,t_neg]) scale([0.4,0.2,0.15]) sphere(r=10);
       }
     }
 
     translate([0,0,0])
       paper_money_negative(w, h, t);
   }
-
-  %translate([side_wall,h-36-side_wall,-3])
-    money();
 }
 
 module paper_money_negative(w_full, h_full, t) {
-  w = 71;
-  h = 38;
-  d = h*2; d_flat = 4;
+  w = 47;
+  h = h_full-side_wall*2;
+  d = w; d_flat = h-d/2;
   translate([side_wall, h_full-h-side_wall, -t]) {
     difference() {
       linear_extrude(t)
         polygon(points=[[0,0], [w,0], [w,h], [0,h]]);
       hull() {
-        translate([d_flat,h,0])
+        translate([0,d_flat,0])
           cylinder(d=d, h=top_wall, $fa=0.2);
-        translate([0,h-d/2,0])
-          cube([10,d/2,top_wall]);
+        cube([d/2,d_flat,top_wall]);
       }
     }
   }
@@ -197,6 +202,21 @@ module key() {
   translate([0,-y0,0]) linear_extrude(key_t) polygon([
     [x0,y0],  [x1,y1],  [x2,y2],  [x3,y3],  [x3,y4],  [x4,y4],
     [x4,-y4], [x3,-y4], [x3,-y3], [x2,-y2], [x1,-y1], [x0,-y0]
+  ]);
+}
+
+module key2_negative(inset, gap) {
+  w_top = 22.9+gap;     h_maxw = 16.5+inset;
+  w_stopper = 11+gap;   h_stopper = 22.5+inset;
+  w_beard = 7.5+gap;   h_beard_s = 28.5+inset;
+  h_total = 57+inset;
+  rotate([0,0,180]) polygon([
+    [0,0], [w_top/2,0], [w_top/2,h_maxw],
+    [w_stopper/2, h_stopper], [w_stopper/2, h_beard_s],
+    [w_beard/2, h_beard_s], [w_beard/2, h_total], [0, h_total],
+    [-w_beard/2, h_total], [-w_beard/2, h_beard_s],
+    [-w_stopper/2, h_beard_s], [-w_stopper/2, h_stopper],
+    [-w_top/2,h_maxw], [-w_top/2,0],
   ]);
 }
 
