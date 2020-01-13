@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 14;
+version = 15;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -27,7 +27,7 @@ cc_h_gap = 0.25;
 cards_gap = 0.9;
 
 key_from_top = 0.8;
-key_spacing_top = 0.1;
+key_spacing_top = 0.4;
 key_spacing_side = 0.4;
 
 edge_rounding = side_wall*0.75;
@@ -104,7 +104,7 @@ $fs = 0.1;
 module key_box(w,h) {
   t = key_t + top_wall + key_spacing_top*2;
   t_neg = key_t + 2*key_spacing_top;
-  key_inset = 0.5;  window_inset = 2.7;
+  key_inset = 0.5;  window_inset = 3.5;
   y1 = key_from_top + key_top_w/2 + key_spacing_side;
   key2_offset = w - 32.7;
   stopper_h = 0.7;
@@ -125,7 +125,7 @@ module key_box(w,h) {
       key_window();
     translate([w-key_inset-key_m1_w*2, key_from_top-0.3, -t_neg]) rotate([0,0,90]) {
       difference() {
-        linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
+        #linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
         difference() {
           translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
           translate([0,-20,t_neg-2-stopper_h]) cube([10,20,2]);
@@ -136,7 +136,7 @@ module key_box(w,h) {
       key_window();
     translate([key2_offset, h, -t_neg]) rotate([0,0,0]) {
       difference() {
-        linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
+        #linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
         difference() {
           translate([0,-4.5,t_neg]) scale([0.4,0.2,0.15]) sphere(r=10);
           translate([-10,-10,t_neg-2-stopper_h]) cube([20,10,2]);
