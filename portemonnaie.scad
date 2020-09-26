@@ -125,9 +125,9 @@ module key_box(w,h) {
       key_window();
     translate([w-key_inset-key_m1_w*2, key_from_top-0.3, -t_neg]) rotate([0,0,90]) {
       difference() {
-        #linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
+        linear_extrude(t_neg) key_negative(key_inset, key_spacing_side);
         difference() {
-          translate([3,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
+          translate([4,-key_top_w/2,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
           translate([0,-20,t_neg-2-stopper_h]) cube([10,20,2]);
         }
       }
@@ -136,7 +136,7 @@ module key_box(w,h) {
       key_window();
     translate([key2_offset, h, -t_neg]) rotate([0,0,0]) {
       difference() {
-        #linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
+        linear_extrude(t_neg) key2_negative(key_inset, key_spacing_side);
         difference() {
           translate([0,-4.5,t_neg]) scale([0.4,0.2,0.15]) sphere(r=10);
           translate([-10,-10,t_neg-2-stopper_h]) cube([20,10,2]);
