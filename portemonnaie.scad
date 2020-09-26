@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 16;
+version = 17;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -30,7 +30,7 @@ key_from_top = 0.8;
 key_spacing_top = 0.2;
 key_spacing_side = 0.4;
 
-edge_rounding = side_wall*0.75;
+edge_rounding = side_wall;
 
 current_color = "green";
 
