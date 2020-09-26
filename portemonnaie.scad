@@ -32,7 +32,7 @@ key_spacing_side = 0.4;
 
 edge_rounding = side_wall;
 
-current_color = "green";
+current_color = "yellow";
 
 rotate([0,-90,0])
  portemonnaie(cards_to_store, false);
@@ -41,7 +41,7 @@ module portemonnaie(number_of_cards, draft=true) {
   w = 87.5;
   h = 59.5;
 
-  multicolor("green") difference() {
+  multicolor("yellow") difference() {
     union() {
       card_box(w, h, number_of_cards);
       key_box(w, h);
@@ -215,7 +215,7 @@ module key() {
 module key2_negative(inset, gap) {
   w_top = 22.9+gap;     h_maxw = 16.5+inset;
   w_stopper = 11+gap;   h_stopper = 22.5+inset;
-  w_beard = 7.5+gap;    h_beard_s = 28.5+inset;
+  w_beard = 7.8+gap;    h_beard_s = 28.5+inset;
   h_total = 57+inset;
   rotate([0,0,180]) polygon([
     [0,0], [w_top/2,0], [w_top/2,h_maxw],
