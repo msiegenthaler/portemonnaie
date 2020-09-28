@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 17;
+version = 18;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -173,12 +173,15 @@ module money() {
 
 module key_window() {
   h = 14;
-  l = 22;
+  l = 7;
   factor = 0.4;
-  translate([h/2-l, 0, 0]) hull() {
-    cylinder(d=h,h=top_wall, $fa=0.5);
-    translate([l-h/2-h/2*factor,0,0]) scale([factor,1,1])
-      cylinder(d=h,h=top_wall, $fa=0.5);
+  union() {
+    intersection() {
+      translate([-l-10+2,-h/2,0]) cube([l+10, h, top_wall+0.2]);
+      translate([-l+h*factor/2-0.7,0,0]) scale([factor,1,1]) cylinder(d=h,h=top_wall+0.2, $fa=0.5);
+    }
+    translate([-l+2,-h/2,0])
+      cube([l, h, top_wall+0.2]);
   }
 }
 
