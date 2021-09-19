@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 19;
+version = 20;
 include <engraving.scad>
 
 cc_h = 54.1;
@@ -44,7 +44,7 @@ module portemonnaie(number_of_cards, draft=true) {
   multicolor("yellow") difference() {
     union() {
       card_box(w, h, number_of_cards);
-//      key_box(w, h);
+      key_box(w, h);
     }
     if (draft) {
       translate([0,h/2,0]) rotate([90,0,0]) rotate([0,90,0])
@@ -68,10 +68,10 @@ module card_box(w, h, number_of_cards) {
       translate([w-edge_rounding,edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
       translate([edge_rounding,h-edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
       translate([w-edge_rounding,h-edge_rounding,t-edge_rounding]) sphere(r=edge_rounding);
-      translate([edge_rounding,edge_rounding,0]) sphere(r=edge_rounding);
-      translate([w-edge_rounding,edge_rounding,0]) sphere(r=edge_rounding);
-      translate([edge_rounding,h-edge_rounding,0]) sphere(r=edge_rounding);
-      translate([w-edge_rounding,h-edge_rounding,0]) sphere(r=edge_rounding);
+      translate([edge_rounding,edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([w-edge_rounding,edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([edge_rounding,h-edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
+      translate([w-edge_rounding,h-edge_rounding,0]) cylinder(r=edge_rounding, h=edge_rounding);
     }
     translate([w-w_c, (h-h_c)/2, mid_wall])
       cube([w_c, h_c, t_c]);
