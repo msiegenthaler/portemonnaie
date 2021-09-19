@@ -145,7 +145,25 @@ module key_box(w,h) {
     }
 
     translate([0,0,0])
-      paper_money_negative(w, h, t);
+      paper_money_slot_negative(w, h, t);
+  }
+}
+
+module paper_money_slot_negative(w_full, h_full, t) {
+  w = 40;
+  h = h_full-side_wall*2;
+  d = w; d_flat = h-d/2;
+  wall = side_wall*1.5;
+  slider_d = 13; slider_l = 20;
+  translate([side_wall, h_full-h-side_wall+2, -t+wall]) {
+    union() {
+      linear_extrude(t)
+        polygon(points=[[0,0], [w,0], [w,h], [0,h]]);
+      gstranslate([h/2-slider_d/2,w/2,-wall]) linear_extrude(side_wall*2) hull() {
+        translate([0,-slider_l/2+slider_d/2]) scale([1,0.5]) circle(d=slider_d);
+        translate([0,slider_l/2+slider_d/2]) scale([1,0.5]) circle(d=slider_d);
+      }
+    }
   }
 }
 
