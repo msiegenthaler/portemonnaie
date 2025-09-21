@@ -80,7 +80,7 @@ module rounded_rect(w, h, t, edge_rounding) {
 }
 
 module card_window(outer_w) {
-  h = 22;
+  h = 18;
   l = 45;
   factor = 0.4;
   translate([outer_w/2-l/2,0,0])
@@ -138,10 +138,10 @@ module money_slot(w, h, d_outer) {
   t_border = 1;
   translate([t_border,-delta,-d]) cube([h-t-t_border,w-t,d]);
 
-  window_h = 12;
-  window_w = 40;
+  window_h = 10;
+  window_w = 30;
   window_bow = 10;
-  translate([h/2,w/2,-10]) rotate([0,0,90]) hull() {
+  translate([h/2+2,w/2,-10]) rotate([0,0,90]) hull() {
     translate([-window_w/2+window_bow/2,0,0]) scale([window_bow/window_h,1,1]) cylinder(d=window_h, h=d+10);
     translate([window_w/2-window_bow/2,0,0]) scale([window_bow/window_h,1,1]) cylinder(d=window_h, h=d+10);
   }
