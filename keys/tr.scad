@@ -5,7 +5,7 @@ module key_tr(inset, gap) {
   w_stopper = 12+gap;   h_stopper = 24.5+inset;
   w_beard = 10+gap;    h_beard_s = 31+inset;
   h_total = 58.5+inset;  d=2.2;
-  stopper_from_top = 6.6;
+  stopper_from_top = 6.7;
   difference() {
     linear_extrude(d) rotate([0,0,270]) polygon([
       [0,0], [w_top/2,0], [w_top/2,h_maxw],

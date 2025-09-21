@@ -5,7 +5,7 @@ module key_bv(inset, gap) {
   w_stopper = 13+gap;   h_stopper = 23.5+inset;
   w_beard = 8+gap;    h_beard_s = 28+inset;
   h_total = 55+inset;  d=2.5;
-  stopper_from_top = 6.4;
+  stopper_from_top = 6.5;
   difference() {
     linear_extrude(d) rotate([0,0,270]) polygon([
       [0,0], [w_top/2,0], [w_top/2,h_maxw],
