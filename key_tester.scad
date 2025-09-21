@@ -11,6 +11,8 @@ h = 62;
 t_top = 0.8;
 d = 2.5 + t_top+1;
 
+d = 2.95; // cut off the top
+
 difference() {
     cube([w-2*delta, h, d]);
     translate([w-delta,0,t_top]) {
