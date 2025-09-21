@@ -1,11 +1,11 @@
 include <stopper.scad>
 
-module key_ju(inset, gap) {
-  w_top = 22.9+gap;     h_maxw = 16.5+inset;
-  w_stopper = 11+gap;   h_stopper = 22.5+inset;
-  w_beard = 7.8+gap;    h_beard_s = 28.5+inset;
-  h_total = 57+inset;   d = 2.5;
-  stopper_from_top = 5;
+module key_tr(inset, gap) {
+  w_top = 25+gap;     h_maxw = 17.5+inset;
+  w_stopper = 12+gap;   h_stopper = 24.5+inset;
+  w_beard = 10+gap;    h_beard_s = 31+inset;
+  h_total = 58+inset;  d=2.2;
+  stopper_from_top = 6;
   difference() {
     linear_extrude(d) rotate([0,0,270]) polygon([
       [0,0], [w_top/2,0], [w_top/2,h_maxw],
@@ -15,7 +15,6 @@ module key_ju(inset, gap) {
       [-w_stopper/2, h_beard_s], [-w_stopper/2, h_stopper],
       [-w_top/2,h_maxw], [-w_top/2,0],
     ]);
-    translate([stopper_from_top,0,-0.01]) key_stopper(8,4);
+    translate([stopper_from_top,0,-0.01]) key_stopper(5,5);
   }
 }
-

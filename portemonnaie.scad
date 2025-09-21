@@ -3,7 +3,9 @@ cards_to_store = 4;
 version = 22;
 include <engraving.scad>
 include <keys/ho.scad>
-include <keys/jo.scad>
+include <keys/ju.scad>
+include <keys/tr.scad>
+include <keys/bv.scad>
 
 cc_h = 54.1;
 cc_w = 85.6;
@@ -25,8 +27,8 @@ edge_rounding = side_wall;
 
 current_color = "yellow";
 
-rotate([0,-90,0])
-  portemonnaie(cards_to_store, false);
+// rotate([0,-90,0])
+  // portemonnaie(cards_to_store, false);
 
 all_keys();
 
@@ -49,11 +51,11 @@ module portemonnaie(number_of_cards, draft=true) {
 
 module all_keys() {
   translate([0,0,0])
-    key_jo(0, key_spacing_side);
+    key_ju(0, key_spacing_side);
   translate([0,50,0])
-    key_ho(0, key_spacing_side);
+    key_tr(0, key_spacing_side);
   translate([0,100,0])
-    key_ho_detail(0, key_spacing_side);
+    key_bv(0, key_spacing_side);
 }
 
 
@@ -137,7 +139,7 @@ module key_box(w,h) {
       key_window();
     translate([key2_offset, h, -t_neg]) rotate([0,0,-90]) {
       difference() {
-        linear_extrude(t_neg) rotate([0,0,-0]) key_jo(key_inset, key_spacing_side);
+        linear_extrude(t_neg) rotate([0,0,-0]) key_ju(key_inset, key_spacing_side);
         difference() {
           translate([4.5,0,t_neg]) scale([0.2,0.4,0.15]) sphere(r=10);
           translate([0,-5,t_neg-2-stopper_h]) cube([20,10,2]);
