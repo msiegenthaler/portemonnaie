@@ -1,10 +1,10 @@
 include <stopper.scad>
 
-module key_bv(inset, gap) {
-  w_top = 23+gap;     h_maxw = 17+inset;
-  w_stopper = 13+gap;   h_stopper = 23.5+inset;
-  w_beard = 8+gap;    h_beard_s = 28+inset;
-  h_total = 55+inset;  d=2.5;
+module key_bv(inset=0, gap=0, d_gap=0) {
+  w_top = 23+gap;      h_maxw = 17+inset;
+  w_stopper = 13+gap;  h_stopper = 23.5+inset;
+  w_beard = 8+gap;     h_beard_s = 28+inset;
+  h_total = 55+inset;  d=2.5+d_gap;
   stopper_from_top = 6.5;
   difference() {
     linear_extrude(d) rotate([0,0,270]) polygon([
