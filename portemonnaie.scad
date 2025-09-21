@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 24;
+version = 26;
 include <engraving.scad>
 include <keys/ho.scad>
 include <keys/ju.scad>
@@ -101,19 +101,19 @@ delta = 0.01;
 module key_box(h,w) {
   gap = 0.4;
   inset = 0.5;
-  t_top = 0.8;
-  d = 2.5 + t_top;
-  d_gap = 0.05;
+  t_top = 1;
+  d_gap = 0.8;
+  d = 2.5 + t_top + d_gap;
 
   window_d_offset = -4.5;
   window_steg = 1;
 
   difference() {
-    translate([0,delta,0]) 
+    translate([0,delta,0])
       mirror([0,0,1]) rounded_rect(h, w-2*delta, d, edge_rounding);
     //keys
     translate([h-48,0,0]) {
-        #translate([0,0,0]) rotate([180,0,90])
+        translate([0,0,0]) rotate([180,0,90])
           key_ju(inset, gap, d_gap);
         translate([0,window_steg,window_d_offset]) rotate([0,0,90])
           key_window();

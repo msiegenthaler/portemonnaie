@@ -1,5 +1,5 @@
 module key_stopper(width, height) {
-  d = 0.55;
+  d = 0.3;
   difference() {
     translate([0,0,0]) scale([height/20,width/20,d/8]) sphere(r=10);
     translate([-height/2,-width/2,d]) cube([height,width,2]);
