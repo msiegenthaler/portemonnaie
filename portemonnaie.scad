@@ -1,6 +1,6 @@
 cards_to_store = 4;
 
-version = 26;
+version = 27;
 include <engraving.scad>
 include <keys/ho.scad>
 include <keys/ju.scad>
@@ -102,7 +102,7 @@ module key_box(h,w) {
   gap = 0.4;
   inset = 0.5;
   t_top = 1;
-  d_gap = 0.8;
+  d_gap = 0.4;
   d = 2.5 + t_top + d_gap;
 
   window_d_offset = -4.5;
