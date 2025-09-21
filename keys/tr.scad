@@ -4,7 +4,7 @@ module key_tr(inset, gap) {
   w_top = 25+gap;     h_maxw = 17.5+inset;
   w_stopper = 12+gap;   h_stopper = 24.5+inset;
   w_beard = 10+gap;    h_beard_s = 31+inset;
-  h_total = 58+inset;  d=2.2;
+  h_total = 58.5+inset;  d=2.2;
   stopper_from_top = 6.6;
   difference() {
     linear_extrude(d) rotate([0,0,270]) polygon([
@@ -15,6 +15,6 @@ module key_tr(inset, gap) {
       [-w_stopper/2, h_beard_s], [-w_stopper/2, h_stopper],
       [-w_top/2,h_maxw], [-w_top/2,0],
     ]);
-    translate([stopper_from_top,0,-0.01]) key_stopper(5,5);
+    translate([stopper_from_top,0,-0.01]) key_stopper(6,6);
   }
 }
